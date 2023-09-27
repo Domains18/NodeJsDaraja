@@ -1,51 +1,40 @@
-import functions from 'firebase-functions';
-import admin from 'firebase-admin';
-
-admin.initializeApp(functions.config().firebase);
-
+import * as functions from 'firebase-functions';
+import * as admin from 'firebase-admin';
 import express from 'express';
-import bodyParser from 'body-parser';
+import * as bodyParser from 'body-parser';
+
+admin.initializeApp();
 
 const app = express();
-
 app.use(bodyParser.json());
 app.disable('x-powered-by');
 
-app.post('/callback', async (req, res) => {
-  const response = {
-    ResultCode: 0,
-    ResultDesc: 'Success',
-  };
-
-  res.status(200).json(response);
-
-  const requestBody = req.body;
-  const myPayload = JSON.stringify(requestBody);
-
-  console.log(myPayload);
-
-  const topicId = requestBody.Body.stkCallback.CheckoutRequestID;
-
-  const sentPayload = {
-    data: {
-      myPayload,
-    },
-    Body: {
-      stkCallback: {
-        MerchantRequestID: requestBody.Body.stkCallback.MerchantRequestID,
-        CheckoutRequestID: requestBody.Body.stkCallback.CheckoutRequestID,
-        ResultCode: requestBody.Body.stkCallback.ResultCode,
-        ResultDesc: requestBody.Body.stkCallback.ResultDesc,
-      },
-    },
-    topic: topicId,
-  };
-
+app.post('/callback', async (req: express.Request, res: express.Response) => {
   try {
+    const requestBody = req.body;
+    const topicId = requestBody.Body.stkCallback.CheckoutRequestID;
+
+    // Send a success response to the M-Pesa API
+    const response = { ResultCode: 0, ResultDesc: 'Success' };
+    res.status(200).json(response);
+
+    // Send the payload to Firebase Cloud Messaging (FCM)
+    const sentPayload = {
+      data: {
+        myPayload: JSON.stringify(requestBody),
+      },
+      notification: {
+        title: 'M-Pesa Callback',
+        body: 'Payment received',
+      },
+      topic: topicId,
+    };
+
     await admin.messaging().send(sentPayload);
   } catch (error) {
-    console.error(error);
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 
-exports.api = functions.https.onRequest(app);
+export const api = functions.https.onRequest(app);

@@ -1,6 +1,5 @@
 import functions from 'firebase-functions';
 import admin from 'firebase-admin'
-import { v4 as uuidv4 } from 'uuid';
 
 
 
@@ -18,14 +17,14 @@ app.post('/callback', async (req: express.Request, res: express.Response) => {
     const response = { 'ResultCode': 0, 'ResultDesc': 'Success' };
 
     res.status(200).json(response);
-    
+
     const requestBody = req.body;
     const myPayload = JSON.stringify(requestBody);
 
     console.log(myPayload);
 
-    let topicId = requestBody.Body.stkCallback.CheckoutRequestID;'
-    
+    let topicId = requestBody.Body.stkCallback.CheckoutRequestID; '
+
     const sentPayload = {
         data: {
             myPayload
@@ -37,8 +36,14 @@ app.post('/callback', async (req: express.Request, res: express.Response) => {
                 "ResultCode": requestBody.Body.stkCallback.ResultCode,
                 "ResultDesc": requestBody.Body.stkCallback.ResultDesc
             }
-        }, 
+        },
         "topic": topicId
 
-    }
+    };
+    return admin.messaging().send(sentPayload)
+        .catch(error => {
+            console.error(error)
+        })
 });
+
+exports.api = functions.https.onRequest(app);

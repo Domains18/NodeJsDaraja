@@ -24,5 +24,9 @@ app.post('/callback', async (req: express.Request, res: express.Response) => {
 
     console.log(myPayload);
 
-    let topicId = body.body.stkCallback.CheckoutRequestID;
+    let topicId = requestBody.Body.stkCallback.CheckoutRequestID;'
+    
+    const sentPayload = {
+        
+    }
 });

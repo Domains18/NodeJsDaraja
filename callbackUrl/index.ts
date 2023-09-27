@@ -17,5 +17,12 @@ app.disable('x-powered-by');
 app.post('/callback', async (req: express.Request, res: express.Response) => {
     const response = { 'ResultCode': 0, 'ResultDesc': 'Success' };
 
-   re 
+    res.status(200).json(response);
+    
+    const requestBody = req.body;
+    const myPayload = JSON.stringify(requestBody);
+
+    console.log(myPayload);
+
+    let topicId = body.body.stkCallback.CheckoutRequestID;
 });

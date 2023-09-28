@@ -1,0 +1,10 @@
+{
+  "name": "mpesa-api",
+  "version": "1.0.0",
+  "description": "intergrating mpesa api with service",
+  "main": "index.js",
+  "repository": "https://github.com/Domains18/mpesa-api.git",
+  "author": "Gibson Kemboi <gibsonsgibson88@gmail.com>",
+  "license": "MIT",
+  "private": false
+}

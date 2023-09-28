@@ -106,7 +106,7 @@ app.post('/confirmation', (req, res) => {
 app.get("/b2curlrequest", async (req, res) => {
     try {
         const accessToken = await getAccessToken();
-        const securityCredential = "YOUR_SECURITY_CREDENTIAL"; // TODO: Add your security credential
+        const securityCredential = "YOUR_SECURITY_CREDENTIAL";
 
         const response = await axios.post("https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest", {
             InitiatorName: "testapi",

@@ -19,9 +19,9 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // Middleware to handle access token
 async function getAccessToken() {
     try {
-        const consumerKey = process.env.CONSUMER_KEY;
-        const consumerSecret = process.env.CONSUMER_SECRET;
-        const auth = "Basic " + Buffer.from(consumerKey + ":" + consumerSecret).toString("base64");
+        const consumerKey = "fBa4D6r7TP7YJleGoeIJ6AnNCUDpQBlt"
+        const consumerSecret = "GeYN83b51fEiA6Kt"
+        const auth = "Basic " + new  Buffer.from(consumerKey + ":" + consumerSecret).toString("base64");
         
         const response = await axios.get("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials", {
             headers: { "Authorization": auth }
@@ -126,7 +126,7 @@ app.get("/b2curlrequest", async (req, res) => {
         res.status(200).json(response.data);
     } catch (error) {
         console.error(error);
-        res.status(500).send("❌ Request failed");
+        res.status(500).send(" Request failed");
     }
 });
 

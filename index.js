@@ -37,11 +37,11 @@ async function getAccessToken() {
 }
 
 
-app.get('/', (req, res) => {
-    res.send("Engineered well, engineered to last");
-    let timestamp = moment().format('YYYYMMDDHHmmss');
-    console.log(timestamp);
-});
+// app.get('/', (req, res) => {
+//     res.send("Engineered well, engineered to last");
+//     let timestamp = moment().format('YYYYMMDDHHmmss');
+//     console.log(timestamp);
+// });
 
 
 app.get('/access_token', async (req, res) => {
@@ -98,8 +98,8 @@ app.get('/register', async (req, res) => {
             axios.post(url, {
                 ShortCode: 174379,
                 ResponseType: "Completed",
-                ConfirmationURL: "https://engineeredwellengineeredtolast.com/confirmation",
-                ValidationURL: "https://engineeredwellengineeredtolast.com/validation"
+                ConfirmationURL: "https://engineeredwellengineeredtolast.com/confirmation", //TODO: Add my confirmation url
+                ValidationURL: "https://engineeredwellengineeredtolast.com/validation" //TODO: Add my validation url
             }, {
                 headers: {
                     "Authorization": auth

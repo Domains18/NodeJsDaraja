@@ -25,5 +25,4 @@ https://developer.safaricom.co.ke/docs#account-balance-api)
 https://developer.safaricom.co.ke/docs#transaction-status-api)
 - [x] [Reversal API](
 https://developer.safaricom.co.ke/docs#reversal-api)
-)[]:
-# mpesa api integration
+)

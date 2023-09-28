@@ -21,10 +21,11 @@ async function getAccessToken() {
     try {
         const consumerKey = "fBa4D6r7TP7YJleGoeIJ6AnNCUDpQBlt"
         const consumerSecret = "GeYN83b51fEiA6Kt"
-        const auth = "Basic " + new  Buffer.from(consumerKey + ":" + consumerSecret).toString("base64");
+        // const auth = "Basic " + new  Buffer.from(consumerKey + ":" + consumerSecret).toString("base64");
+        const auth = new Buffer.from(`${consumerKey}:${consumerSecret}`).toString("base64");
         
         const response = await axios.get("https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials", {
-            headers: { "Authorization": auth }
+            headers: { Authorization: `Basic ${auth}` }
         });
 
         return response.data.access_token;
@@ -45,23 +46,25 @@ app.get('/access_token', async (req, res) => {
 
 // Route to initiate STK push
 app.get('/stkpush', async (req, res) => {
+    const passKey = 'bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919'
+    const short_code = 174379
     try {
         const accessToken = await getAccessToken();
         const timestamp = moment().format('YYYYMMDDHHmmss');
-        const password = new Buffer.from(process.env.PASSKEY + process.env.SHORTCODE + timestamp).toString("base64");
+        const password = new Buffer.from(short_code + passKey + timestamp).toString("base64");
 
         const response = await axios.post("https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest", {
-            businessShortCode: 174379,
-            password: password,
-            timestamp: timestamp,
-            transactionType: "CustomerPayBillOnline",
-            amount: 1,
-            partyA: 254708374149,
-            partyB: 174379,
-            phoneNumber: 254708374149,
-            callBackURL: "https://engineeredwellengineeredtolast.com",
-            accountReference: "account",
-            transactionDesc: "test"
+            BusinessShortCode: 174379,
+            Password: password,
+            Timestamp: timestamp,
+            TransactionType: "CustomerPayBillOnline",
+            Amount: 1,
+            PartyA: 254708374149,
+            PartyB: 174379,
+            PhoneNumber: 254708374149,
+            CallBackURL: "https://engineeredwellengineeredtolast.com",
+            AccountReference: "account",
+            TransactionDesc: "test"
         }, {
             headers: { "Authorization": "Bearer " + accessToken }
         });

@@ -28,8 +28,10 @@ async function getAccessToken() {
             headers: { Authorization: `Basic ${auth}` }
         });
 
+        
         return response.data.access_token;
     } catch (error) {
+        console.log(error);
         throw new Error("Failed to get access token: " + error.message);
     }
 }

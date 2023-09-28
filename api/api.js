@@ -126,3 +126,6 @@ router.post("/api/callback", (req, res) => {
         console.log("JSON file created");
     });
 });
+
+
+module.exports = router;

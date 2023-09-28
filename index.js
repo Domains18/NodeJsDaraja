@@ -59,7 +59,7 @@ app.get('/stkpush', async (req, res) => {
             partyA: 254708374149,
             partyB: 174379,
             phoneNumber: 254708374149,
-            callBackURL: "https://engineeredwellengineeredtolast.com", // TODO: Add your callback URL
+            callBackURL: "https://engineeredwellengineeredtolast.com",
             accountReference: "account",
             transactionDesc: "test"
         }, {
@@ -79,8 +79,8 @@ app.get('/register', async (req, res) => {
         const response = await axios.post("https://sandbox.safaricom.co.ke/mpesa/c2b/v1/registerurl", {
             ShortCode: 174379,
             ResponseType: "Completed",
-            ConfirmationURL: "https://engineeredwellengineeredtolast.com/confirmation", // TODO: Add your confirmation URL
-            ValidationURL: "https://engineeredwellengineeredtolast.com/validation" // TODO: Add your validation URL
+            ConfirmationURL: "https://engineeredwellengineeredtolast.com/confirmation", 
+            ValidationURL: "https://engineeredwellengineeredtolast.com/validation" 
         }, {
             headers: { "Authorization": "Bearer " + accessToken }
         });

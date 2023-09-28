@@ -6,5 +6,10 @@
   "repository": "https://github.com/Domains18/mpesa-api.git",
   "author": "Gibson Kemboi <gibsonsgibson88@gmail.com>",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  }
 }

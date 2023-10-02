@@ -1,10 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { makeStkPush } = require('../controllers/controller');
-const { createToken } = require('../middleware/accessMiddleware');
+const {createToken, postStk} = require('../controllers/controller');
 
-router.post('/stkpush',createToken, makeStkPush);
+router.post('/stkpush',createToken, postStk);
 
 
 module.exports = router;

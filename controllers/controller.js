@@ -28,9 +28,9 @@ const makeStkPush = expressAsyncHandler(async (req, res) => {
         TransactionType: "CustomerPayBillOnline",
         Amount: amount,
         PartyA: phoneNumber,
-        PartyB: shortCode,
+        PartyB: 9324243,
         PhoneNumber: phoneNumber,
-        CallBackURL: "https://sandbox.safaricom.co.ke/mpesa/", //replace with your own
+        CallBackURL: "https://goose-merry-mollusk.ngrok-free.app/callback",
         AccountReference: "Test",
         TransactionDesc: "Test"
     };

@@ -40,12 +40,14 @@ app.use('/api/v1', authentication);
 app.get('/callback', (req, res) => {
     const { Body, To, From } = req.query;
     const message = { Body, To, From };
-    fs.writeFile('message.json', JSON.stringify(message), (err) => {
-        if (err) {
-            console.log(err);
-        }
-        console.log('Message saved');
-    });
+    if (fs.existsSync('logs.json')) {
+        const data = fs.readFileSync('messages.json');
+        const json = JSON.parse(data);
+        json.push(message);
+        fs.writeFileSync('logs.json', JSON.stringify(json));
+    } else {
+        fs.writeFileSync('logs.json', JSON.stringify([message]));
+    }
     res.send('Message saved');
 });
 

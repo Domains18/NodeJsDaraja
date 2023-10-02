@@ -1,35 +1,26 @@
 const expressAsyncHandler = require('express-async-handler');
 const moment = require('moment');
 const axios = require('axios');
-const createToken =require('../middleware/accessMiddleware').createToken;
-
 
 
 const makeStkPush = expressAsyncHandler(async (req, res) => {
-    const { phoneNumber, amount } = req.body;
-    if (!phoneNumber || !amount) {
-        res.status(400).json({
-            message: "Phone number and amount are required"
-        });
-        return;
-    }
+   try {
+    const token = req.token;
     const shortCode = "174379";
-    const passkey = createToken(alphauser, alphapass);
+    const passkey = "b0b2b4b0b2b4b0b2b4b0b2b4b0b2b4b0";
     const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
-
     const date = moment().format("YYYYMMDDHHmmss");
     const timestamp = new Buffer.from(date).toString("base64");
-
     const password = new Buffer.from(shortCode + passkey + timestamp).toString("base64");
     const data = {
         BusinessShortCode: shortCode,
         Password: password,
         Timestamp: timestamp,
         TransactionType: "CustomerPayBillOnline",
-        Amount: amount,
-        PartyA: phoneNumber,
+        Amount: 1,
+        PartyA: 254757387606,
         PartyB: 9324243,
-        PhoneNumber: phoneNumber,
+        PhoneNumber: 254757387606,
         CallBackURL: "https://goose-merry-mollusk.ngrok-free.app/callback",
         AccountReference: "Test",
         TransactionDesc: "Test"
@@ -43,6 +34,9 @@ const makeStkPush = expressAsyncHandler(async (req, res) => {
     }).catch((err) => {
         res.status(500).json({ message: err.message });
     });
+   } catch (error) {
+    throw new Error(error);
+   }
 });
 
 

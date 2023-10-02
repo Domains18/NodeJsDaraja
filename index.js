@@ -12,7 +12,7 @@ const { errorHandler } = require('./middleware/errorHandler');
 const port = process.env.PORT || 5000;
 const hostname = 'localhost';
 
-app.use(errorHandler);
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,13 +35,13 @@ app.use(express.static('public'));
 
 
 const authentication = require('./routes/authentication');
-app.use('/api/v1', authentication);
+app.use('/api/', authentication);
 
 app.get('/callback', (req, res) => {
     const { Body, To, From } = req.query;
     const message = { Body, To, From };
     if (fs.existsSync('logs.json')) {
-        const data = fs.readFileSync('messages.json');
+        const data = fs.readFileSync('logs.json');
         const json = JSON.parse(data);
         json.push(message);
         fs.writeFileSync('logs.json', JSON.stringify(json));
@@ -50,7 +50,7 @@ app.get('/callback', (req, res) => {
     }
     res.send('Message saved');
 });
-
+app.use(errorHandler);
 // Start the server
 server.listen(port, hostname, () => {
     console.log(`Server running at http://${hostname}:${port}/`);

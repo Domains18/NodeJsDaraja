@@ -1,0 +1,10 @@
+const express = require('express');
+const router = express.Router();
+
+const { makeStkPush } = require('../controllers/controller');
+const { createToken } = require('../middleware/accessMiddleware');
+
+router.post('/stkpush',createToken, makeStkPush);
+
+
+module.exports = router;

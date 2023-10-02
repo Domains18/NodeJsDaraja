@@ -29,7 +29,7 @@ const createToken = async (req, res, next) => {
 
 //stk push
 const postStk = async (req, res) => {
-  const shortCode = 9324243
+  const shortCode = 174379;  // replace with your own
   const phone = 757387606;
   const amount = req.body.amount || 1;
   const passkey =

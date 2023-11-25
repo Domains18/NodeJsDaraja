@@ -23,7 +23,7 @@ const createToken = async (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).json(err.message);
+      res.status(400).json("TOKEN ERROR: " + err.message);
     });
 };
 
@@ -31,7 +31,7 @@ const createToken = async (req, res, next) => {
 const postStk = async (req, res) => {
   const shortCode = 174379;  // replace with your own
   const phone = 757387606;
-  const amount = req.body.amount || 1;
+  const amount = 1;
   const passkey =
     "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
   const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";

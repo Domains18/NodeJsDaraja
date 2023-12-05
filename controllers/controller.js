@@ -9,6 +9,7 @@ const createToken = async (req, res, next) => {
   const secret = process.env.CONSUMER_SECRET;
   const consumer = process.env.CONSUMER_KEY
   const auth = new Buffer.from(`${consumer}:${secret}`).toString("base64");
+  const url_dev = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
   await axios
     .get(
       "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
@@ -60,7 +61,7 @@ const postStk = async (req, res) => {
     AccountReference: "purchase",
     TransactionDesc: "purchase",
   };
-
+ stk_dev = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
   await axios
     .post("https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest", data, {
       headers: {
@@ -91,7 +92,6 @@ const postStk = async (req, res) => {
 
 //callback
 const callback = async (req, res) => {
-  // console.log("STK PUSH CALLBACK", req.body);
   const data = req.body.Body.stkCallback;
   const transaction = {
     MerchantRequestID: data.MerchantRequestID,

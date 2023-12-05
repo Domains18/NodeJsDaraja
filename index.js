@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const fs = require('fs');
 const dotenv = require('dotenv').config();
 const app = express();
 const { errorHandler } = require('./middleware/errorHandler');
@@ -10,7 +9,6 @@ const mongoose = require('mongoose');
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-
 
 app.get('/', (req, res) => {
     if (req.accepts('html')) {

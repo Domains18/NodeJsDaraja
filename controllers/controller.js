@@ -9,7 +9,7 @@ const createToken = async (req, res, next) => {
   const auth = new Buffer.from(`${consumer}:${secret}`).toString("base64");
   await axios
     .get(
-      "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
+      "https://api.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials",
       {
         headers: {
           authorization: `Basic ${auth}`,
@@ -23,18 +23,16 @@ const createToken = async (req, res, next) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).json("TOKEN ERROR: " + err.message);
+      res.status(400).json("TOKEN GENERETION ERROR: " + err.message);
     });
 };
 
 //stk push
 const postStk = async (req, res) => {
-  const shortCode = 174379;  // replace with your own
-  const phone = 757387606;
+  const shortCode = process.env.MPESA_SHORTCODE;
+  const phone = 759097030;
   const amount = 1;
-  const passkey =
-    "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919";
-  const url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
+  const passkey = process.env.MPESA_PASSKEY;
 
   const date = new Date();
   const timestamp =
@@ -56,15 +54,16 @@ const postStk = async (req, res) => {
     PartyA: `254${phone}`,
     PartyB: shortCode,
     PhoneNumber: `254${phone}`,
-    CallBackURL: "https://goose-merry-mollusk.ngrok-free.app/callback",
+    CallBackURL: "https://goose-merry-mollusk.ngrok-free.app/api/callback",
     AccountReference: "purchase",
     TransactionDesc: "purchase",
   };
 
   await axios
-    .post(url, data, {
+    .post("https://api.safaricom.co.ke/mpesa/stkpush/v1/processrequest", data, {
       headers: {
         authorization: `Bearer ${token}`,
+
       },
     })
     .then((data) => {
@@ -73,7 +72,7 @@ const postStk = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).json(err.message);
+      res.status(400).json("STK PUSH ERROR: " + err.message);
     });
 };
 

@@ -1,7 +1,7 @@
 
 
 const axios = require("axios");
-const { saveTransaction, fetchTransactionByCheckoutRequestID } = require("../mongoose/database");
+const { saveTransaction} = require("../mongoose/database");
 
 
 //middleware
@@ -32,9 +32,9 @@ const createToken = async (req, res, next) => {
 
 //stk push
 const postStk = async (req, res) => {
+  const { phone, amount } = req.body;
+  console.log(req.body)
   const shortCode = process.env.MPESA_SHORTCODE;
-  const phone = 741806234;
-  const amount = 1;
   const passkey = process.env.MPESA_PASSKEY;
 
   const date = new Date();
@@ -54,9 +54,9 @@ const postStk = async (req, res) => {
     Timestamp: timestamp,
     TransactionType: "CustomerPayBillOnline",
     Amount: amount,
-    PartyA: `254${phone}`,
+    PartyA: phone,
     PartyB: shortCode,
-    PhoneNumber: `254${phone}`,
+    PhoneNumber: phone,
     CallBackURL: "https://goose-merry-mollusk.ngrok-free.app/api/callback",
     AccountReference: "purchase",
     TransactionDesc: "purchase",
@@ -85,7 +85,7 @@ const postStk = async (req, res) => {
     })
     .catch((err) => {
       console.log(err);
-      res.status(400).json("STK PUSH ERROR: " + err.message);
+      res.status(422).json("STK PUSH ERROR: " + err.message);
     });
 };
 

@@ -1,5 +1,4 @@
-const { fetchTransactionByMerchantRequestID } = require("../mongoose/database");
-import Transaction from "../mongoose/database";
+const { fetchTransactionByMerchantRequestID, Transaction } = require("../mongoose/database");
 
 const validateTransaction = async (req, res, next) => {
     const { payload } = req.body;

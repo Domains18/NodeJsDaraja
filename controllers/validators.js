@@ -1,8 +1,8 @@
 const { fetchTransactionByMerchantRequestID, Transaction } = require("../mongoose/database");
 
 const validateTransaction = async (req, res, next) => {
-    const { MerchantRequestID } = req.body;
-    console.log(payload);
+    const { pay } = req.body;
+    console.log(MerchantRequestID);
     try {
         const transaction = await Transaction.findOne({ MerchantRequestID: MerchantRequestID });
         if (transaction == null) {

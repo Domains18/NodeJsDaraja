@@ -77,8 +77,7 @@ The backend server should now be running.
 
 ### FrontEnd Repository
 
-- If you do not have postman or want to use a frontend, click here [FrontEnd]("https://github.com/Domains18/SafaricomDarajaFrontEnd.git")
-- - You can find the backend API here: [Domains18/Nodejs/Daraja]("https://github.com/Domains18/NodeJsDaraja.git")
+- If you do not have postman or want to use a frontend, click here [FrontEnd]("https://github.com/Domains18/SafaricomDarajaFrontEnd.git") 
 
 ## Additional Information
 

@@ -75,8 +75,6 @@ The backend server should now be running.
 - **Method:** `POST`
 - **Description:** Handles callbacks from M-Pesa to update transaction status.
 
-### FrontEnd Repository
-
 - If you do not have postman or want to use a frontend, click here [FrontEnd]("https://github.com/Domains18/SafaricomDarajaFrontEnd.git") 
 
 ## Additional Information

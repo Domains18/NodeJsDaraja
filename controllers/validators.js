@@ -2,8 +2,7 @@ const { fetchTransactionByMerchantRequestID, Transaction } = require("../mongoos
 
 const validateTransaction = async (req, res, next) => {
     const { payload } = req.body;
-    const { MerchantRequestID } = payload.MerchantRequestID
-    console.log(payload);
+    
     try {
         const transaction = await Transaction.findOne({ MerchantRequestID: MerchantRequestID });
         if (transaction == null) {

@@ -1,22 +1,84 @@
----
-runme:
-  id: 01HGZJM9WSHWZK82GVTKTP60SN
-  version: v2.0
----
+# M-Pesa Stk Push Backend
 
-# Daraja API Wrapper
+This backend code is designed to facilitate M-Pesa Stk Push transactions. It includes functionality for generating OAuth tokens, initiating Stk Push transactions, and handling callbacks for transaction status updates.
 
-This is a Nodejs wrapper API code for Safaricom's Daraja API. - Please find comprehensive docs at [Daraja API](https://developer.safaricom.co.ke/docs)
+## Prerequisites
+
+Before running the backend code, make sure you have the following set up:
+
+- Node.js installed
+- npm (Node Package Manager) installed
+- MongoDB or another database (For storing transaction data)
 
 ## Installation
 
-clone the repo and run `npm install`
+1. Clone the repository:
 
-## Usage
+    ```bash
+    git clone https://github.com/Domains18/NodejsDaraja
+    ```
 
-- I did not include the .env file in the repo, so you will need to create one and add the following variables
-- CONSUMER_KEY
-- CONSUMER_SECRET
-- SHORTCODE
-- PASSKEY
-- MONGODB_URI
+2. Navigate to the project directory:
+
+    ```bash
+    cd /path/to/your/backend
+    ```
+
+3. Install dependencies:
+
+    ```bash
+    npm install
+    ```
+
+4. Set up environment variables:
+
+   Create a `.env` file in the project root and configure the following variables:
+
+   ```env
+   CONSUMER_KEY=your_consumer_key
+   CONSUMER_SECRET=your_consumer_secret
+   MPESA_SHORTCODE=your_mpesa_shortcode
+   MPESA_PASSKEY=your_mpesa_passkey
+   MONGODB_URI=your_mongodb_uri
+   ```
+
+5. Start the server:
+
+    ```bash
+    npm start
+    ```
+
+The backend server should now be running.
+
+## Endpoints
+
+### 1. Generate OAuth Token and PushStk
+
+- **Endpoint:** `/api/stkpush`
+- **Method:** `POST`
+- **Description:** Generates an OAuth token required for M-Pesa API requests and innitiates a pushstk request.
+
+
+### 3. Callback for Transaction Status
+
+- **Endpoint:** `/api/callback`
+- **Method:** `POST`
+- **Description:** Handles callbacks from M-Pesa to update transaction status.
+
+### FrontEnd Repository
+- If you do not have postman or want to use a frontend, click here:
+- [FrontEnd/Nodejs/Daraja]("https://github.com/Domains18/SafaricomDarajaFrontEnd.git")
+## Additional Information
+
+- This backend code uses Axios for making HTTP requests.
+- Transaction data is stored in a MongoDB database.
+- Callbacks from M-Pesa are handled to update the transaction status.
+
+Feel free to customize and extend the backend based on your specific requirements.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+

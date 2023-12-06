@@ -15,7 +15,7 @@ const validateTransaction = async (req, res, next) => {
             next();
         }
     } catch (error) {
-        return res.status(500).json({ message: err.message });
+        return res.status(500).json({ message: error.message });
     }
 }
 

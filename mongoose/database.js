@@ -15,7 +15,6 @@ const transactionSchema = new mongoose.Schema({
 
 
 const Transaction = mongoose.model('Transaction', transactionSchema);
-export default Transaction;
 
 
 const saveTransaction = async (values) => {
@@ -65,4 +64,4 @@ const fetchTransactionByCheckoutRequestID = async (req, res) => {
 }
 
 
-module.exports = { saveTransaction, fetchTransactionByMerchantRequestID, fetchTransactionByCheckoutRequestID };
+module.exports = { saveTransaction, fetchTransactionByMerchantRequestID, fetchTransactionByCheckoutRequestID, Transaction };

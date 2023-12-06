@@ -12,7 +12,7 @@ const validateTransaction = async (req, res, next) => {
         console.log("transaction", transaction);
         res.status(200).json({ transaction });
     } catch (error) {
-
+        res.status(400).json({ message: error.message });
     }
 }
 

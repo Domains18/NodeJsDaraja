@@ -9,10 +9,6 @@ const validateTransaction = async (req, res, next) => {
         const transaction = await fetchTransactionByMerchantRequestID(MerchantRequestID);
         if (transaction == null) {
             return res.status(404).json({ message: 'Cannot find transaction' });
-        } else {
-            res.status(200).json(transaction);
-            console.log(transaction);
-            next();
         }
     } catch (error) {
         console.log(error);

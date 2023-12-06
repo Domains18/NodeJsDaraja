@@ -45,7 +45,7 @@ const fetchTransactionByMerchantRequestID = async (req, res) => {
         }
         res.json(transaction);
     } catch (err) {
-        return res.status(500).json({ message: err.message });
+        console.log(err);
     }
 }
 

@@ -1,8 +1,4 @@
----
-runme:
-  id: 01HGZNS58YACW06V3H4MDWQS3S
-  version: v2.0
----
+
 
 # M-Pesa Stk Push Backend
 

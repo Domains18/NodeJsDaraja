@@ -5,7 +5,10 @@ const dotenv = require('dotenv').config();
 const app = express();
 const { errorHandler } = require('./middleware/errorHandler');
 const mongoose = require('mongoose');
+const authentication = require('./routes/authentication');
+const PORT = process.env.PORT || 3000
 
+app.use(express.json());
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -22,15 +25,17 @@ app.get('/', (req, res) => {
     }
 }
 );
+
+
 //static files to use css
 app.use(express.static('public'));
-const authentication = require('./routes/authentication');
-app.use('/api/', authentication);
+
+app.use('/api', authentication);
 
 //mongoose
 function connectDatabase() {
   mongoose
-    .connect(process.env.MONGODB_URI, {})
+    .connect(process.env.MONGO_URI)
     .then((result) => {
       console.log("Database connected");
     })
@@ -42,6 +47,6 @@ connectDatabase();
 
 app.use(errorHandler);
 
-app.listen(process.env.PORT, () => {
-  console.log(`Server running on port ${process.env.PORT}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 });

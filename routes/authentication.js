@@ -8,4 +8,5 @@ router.post('/stkpush',createToken, postStk);
 router.post('/callback', callback);
 router.post('/validate', validateTransaction);
 
+
 module.exports = router;

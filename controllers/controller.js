@@ -6,8 +6,8 @@ const { saveTransaction} = require("../mongoose/database");
 
 //middleware
 const createToken = async (req, res, next) => {
-  const secret = process.env.MPESA_CONSUMER_SECRET;
-  const consumer = process.env.MPESA_CONSUMER_KEY;
+  const secret = "zxDW4qYU7w5qaZbyWiLc8HXLYdovAXbKQIJWdb3AQPB14rgW9GJGi3Gq1fZcanpD";
+  const consumer ="iDIYLjweZ5SppYspCQb8NUQh7SgrypGOpAaX63IfohmAd7ii"
   const auth = new Buffer.from(`${consumer}:${secret}`).toString("base64");
   const url_dev = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
   await axios
@@ -21,6 +21,7 @@ const createToken = async (req, res, next) => {
     )
     .then((data) => {
       token = data.data.access_token;
+      // console.log("TOKEN", token);
       next();
     })
     .catch((err) => {
@@ -30,11 +31,10 @@ const createToken = async (req, res, next) => {
 
 //stk push
 const postStk = async (req, res) => {
-  const phone = req.body.phone.substring(1);
-  const amount = req.body.amount;
-  console.log(req.body)
-  const shortCode = process.env.MPESA_SHORTCODE;
-  const passkey = process.env.MPESA_PASSKEY;
+  const phone = req.body.phone;
+  const amount = 3000;
+  const shortCode = "174379";
+  const passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
 
   const date = new Date();
   const timestamp =
@@ -48,17 +48,17 @@ const postStk = async (req, res) => {
     "base64"
   );
   const data = {
-    BusinessShortCode: shortCode,
+    BusinessShortCode: "174379", // "174379",
     Password: password,
     Timestamp: timestamp,
     TransactionType: "CustomerPayBillOnline",
     Amount: amount,
-    PartyA: `254${phone}`,
-    PartyB: shortCode,
-    PhoneNumber: `254${phone}`,
+    PartyA: phone,
+    PartyB: "174379",
+    PhoneNumber: phone,
     CallBackURL: "https://mydomain.com/pat",
-    AccountReference: "purchase",
-    TransactionDesc: "purchase",
+    AccountReference: "Reject Finance Bill 2024",
+    TransactionDesc: "Reject Finance Bill 2024",
   };
  stk_dev = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest";
   await axios
@@ -84,6 +84,7 @@ const postStk = async (req, res) => {
     })
     .catch((err) => {
       res.status(422).json("STK PUSH ERROR: " + err.message);
+      console.log(err);
     });
 };
 
@@ -102,16 +103,6 @@ const callback = async (req, res) => {
     TransactionDate: data.CallbackMetadata?.Item[3].Value,
     PhoneNumber: data.CallbackMetadata?.Item[4].Value,
   };
-  await saveTransaction(transaction)
-    .then((data) => {
-      console.log("SAVED TRANSACTION", data);
-      res.sendStatus(200);
-    }
-  )
-    .catch((err) => {
-      console.log(err);
-      res.status(400).json("CALLBACK ERROR: " + err.message);
-    });
 };
 
 

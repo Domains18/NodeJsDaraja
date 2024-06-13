@@ -43,7 +43,7 @@ function connectDatabase() {
       console.log(err);
     });
 }
-connectDatabase();
+// connectDatabase();
 
 app.use(errorHandler);
 

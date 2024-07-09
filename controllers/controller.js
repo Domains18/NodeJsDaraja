@@ -6,8 +6,8 @@ const { saveTransaction} = require("../mongoose/database");
 
 //middleware
 const createToken = async (req, res, next) => {
-  const secret = "zxDW4qYU7w5qaZbyWiLc8HXLYdovAXbKQIJWdb3AQPB14rgW9GJGi3Gq1fZcanpD";
-  const consumer ="iDIYLjweZ5SppYspCQb8NUQh7SgrypGOpAaX63IfohmAd7ii"
+  const secret = process.env["secret_key];
+  const consumer = process.env["consumer_key"]
   const auth = new Buffer.from(`${consumer}:${secret}`).toString("base64");
   const url_dev = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials";
   await axios
@@ -31,10 +31,12 @@ const createToken = async (req, res, next) => {
 
 //stk push
 const postStk = async (req, res) => {
-  const phone = req.body.phone;
-  const amount = 1;
-  const shortCode = "174379";
-  const passkey = "bfb279f9aa9bdbcf158e97dd71a467cd2e0c893059b10f78e6b72ada1ed2c919"
+  const {phone, amount} = req.body;
+  if(!phone || !amount){
+      return res.sendStatus(400).json("empty request body");
+  }
+  const shortCode = process.env["shortCode"]
+  const passkey = process.env["passkey"]
 
   const date = new Date();
   const timestamp =

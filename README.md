@@ -16,21 +16,21 @@ Before running the backend code, make sure you have the following set up:
 
 1. Clone the repository:
 
-```bash {"id":"01HGZNS58XQD8Y1G1JR4N7Y0Y7"}
+```bash
 git clone https://github.com/Domains18/NodejsDaraja
 
 ```
 
 2. Navigate to the project directory:
 
-```bash {"id":"01HGZNS58XQD8Y1G1JR8AA3KWN"}
+```bash 
 cd /path/to/your/backend
 
 ```
 
 3. Install dependencies:
 
-```bash {"id":"01HGZNS58YACW06V3H4C2001EH"}
+``` bash
 npm install
 
 ```
@@ -38,19 +38,19 @@ npm install
 4. Set up environment variables:
 
 Create a `.env` file in the project root and configure the following variables:
-
-```env {"id":"01HGZNS58YACW06V3H4FDT8KRM"}
-CONSUMER_KEY=your_consumer_key
-CONSUMER_SECRET=your_consumer_secret
-MPESA_SHORTCODE=your_mpesa_shortcode
-MPESA_PASSKEY=your_mpesa_passkey
+the following envirronment can be obtained from safaricom daraja portal 
+```env
+consumer_key=your_consumer_key
+consumer_secret=your_consumer_secret
+shortcode=your_mpesa_shortcode
+passkey=your_mpesa_passkey
 MONGODB_URI=your_mongodb_uri
 
 ```
 
 5. Start the server:
 
-```bash {"id":"01HGZNS58YACW06V3H4GRT80Y9"}
+```bash 
 npm start
 
 ```
@@ -71,7 +71,6 @@ The backend server should now be running.
 - **Method:** `POST`
 - **Description:** Handles callbacks from M-Pesa to update transaction status.
 
-- If you do not have postman or want to use a frontend, click here [FrontEnd]("https://github.com/Domains18/SafaricomDarajaFrontEnd.git") 
 
 ## Additional Information
 

@@ -1,6 +1,6 @@
 ### SERVER IMPLEMENTATION OF DARAJA API 
 
-- This is an implementation of the Daraja API by Safaricom. This is a follow up of the previous implementation of the same API using Express.js. This time round, I have used Nestjs to implement the API. Nestjs is a progressive Node.js framework for building efficient, reliable and scalable server-side applications. It uses modern JavaScript, is built with TypeScript (preserves compatibility with pure JavaScript) and combines elements of OOP (Object Oriented Programming), FP (Functional Programming), and FRP (Functional Reactive Programming).
+- This is an implementation of the Daraja API by Safaricom. This is a follow up of the previous implementation of the same API using Express.js. This time round, I have used Nestjs to implement the API. 
  implement the API, adding other features offfered by Safaricom's Daraja API.
 - Typescript support is enabled in this project.
 

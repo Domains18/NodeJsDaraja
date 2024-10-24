@@ -10,8 +10,15 @@ export class AuthService {
 
     async generateToken() {
         try {
-            const secret = this.configService.get('AUTH_SECRET');
-            const consumer = this.configService.get('AUTH_CONSUMER');
+            const secret = this.configService.get<string>('CONSUMER_SECRET');
+            const consumer = this.configService.get<string>('CONSUMER_KEY');
+
+            if (secret == undefined || consumer == undefined) {
+                this.logger.error('Consumer key or secret not found');
+                return null;
+            }
+
+            this.logger.log(`Consumer: ${consumer}`);
 
             const auth = Buffer.from(`${consumer}:${secret}`).toString('base64');
 

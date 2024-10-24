@@ -25,9 +25,9 @@ export class MpesaExpressService {
 
         const token = await this.authService.generateToken();
 
-        this.logger.log(`Token: ${token}`);
+        this.logger.debug(`Token: ${token}`);
 
-        if (!token || token === '' || token === null) {
+        if (!token || token === '' || token === null || token === undefined) {
             throw new HttpException('Failed to generate token, Please check your environment variables', 401);
         }
 

@@ -18,8 +18,6 @@ export class AuthService {
                 return null;
             }
 
-            this.logger.log(`Consumer: ${consumer}`);
-
             const auth = Buffer.from(`${consumer}:${secret}`).toString('base64');
 
             const response = await axios.get(
@@ -31,6 +29,7 @@ export class AuthService {
                 },
             );
 
+            
             return response.data.acess_token;
         } catch (error) {
             this.logger.error(`Error: ${error.message}`);

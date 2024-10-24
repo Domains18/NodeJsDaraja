@@ -2,12 +2,12 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { MpesaExpressService } from './mpesa-express.service';
 import { CreateMpesaExpressDto } from './dto/create-mpesa-express.dto';
 
-@Controller('mpesa-express')
+@Controller('mpesa')
 export class MpesaExpressController {
-  constructor(private readonly mpesaExpressService: MpesaExpressService) { }
-  
-  @Post()
-  create(@Body() createMpesaExpressDto: CreateMpesaExpressDto) {
-    return this.mpesaExpressService.stkPush(createMpesaExpressDto);
-  }
+    constructor(private readonly mpesaExpressService: MpesaExpressService) {}
+
+    @Post('/stkpush')
+    create(@Body() createMpesaExpressDto: CreateMpesaExpressDto) {
+        return this.mpesaExpressService.stkPush(createMpesaExpressDto);
+    }
 }

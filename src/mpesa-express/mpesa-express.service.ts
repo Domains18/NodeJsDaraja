@@ -28,7 +28,7 @@ export class MpesaExpressService {
         this.logger.log(`Token: ${token}`);
 
         if (!token || token === '' || token === null) {
-            throw new HttpException('Failed to generate token', 500);
+            throw new HttpException('Failed to generate token, Please check your environment variables', 401);
         }
 
         const bodyRequest = {
@@ -54,8 +54,7 @@ export class MpesaExpressService {
                 },
             },
         );
-      
-      this.logger.warn(`Response: ${response.data}`);
+
+        this.logger.warn(`Response: ${response.data}`);
     }
-  
 }

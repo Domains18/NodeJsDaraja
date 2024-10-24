@@ -3,7 +3,7 @@ import { CallbackService } from './callback.service';
 import { CallbackController } from './callback.controller';
 
 @Module({
-  controllers: [CallbackController],
-  providers: [CallbackService],
+    controllers: [CallbackController],
+    providers: [CallbackService],
 })
 export class CallbackModule {}

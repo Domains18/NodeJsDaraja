@@ -5,8 +5,8 @@ import { AuthService } from 'src/services/auth.service';
 import { ConfigService } from '@nestjs/config';
 
 @Module({
-  imports: [],
-  controllers: [MpesaExpressController],
-  providers: [MpesaExpressService, AuthService, ConfigService],
+    imports: [],
+    controllers: [MpesaExpressController],
+    providers: [MpesaExpressService, AuthService, ConfigService],
 })
 export class MpesaExpressModule {}

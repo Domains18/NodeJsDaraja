@@ -3,7 +3,7 @@ import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 
 @Injectable()
-export class AuthProvider {
+export class AuthService {
     constructor(private configService: ConfigService) {}
 
     async generateToken() {

@@ -1,7 +1,6 @@
 import { Injectable, HttpException, Logger } from '@nestjs/common';
 import { CreateMpesaExpressDto } from './dto/create-mpesa-express.dto';
 import { AuthService } from 'src/services/auth.service';
-import { PrismaService } from 'src/services/prisma.service';
 import axios from 'axios';
 
 @Injectable()
@@ -20,15 +19,12 @@ export class MpesaExpressService {
         const passkey = process.env.MPESA_PASSKEY;
 
         const timestamp = await this.generateTimestamp();
-
         const password = Buffer.from(`${shortcode}${passkey}${timestamp}`).toString('base64');
 
         const token = await this.authService.generateToken();
-
         this.logger.debug(`Token: ${token}`);
-
-        if (!token || token === '' || token === null || token === undefined) {
-            throw new HttpException('Failed to generate token, Please check your environment variables', 401);
+        if (!token) {
+            throw new HttpException('Failed to generate token, please check your environment variables', 401);
         }
 
         const bodyRequest = {
@@ -45,16 +41,20 @@ export class MpesaExpressService {
             TransactionDesc: 'Payment for goods and services',
         };
 
-        const response = await axios.post(
-            'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
-            bodyRequest,
-            {
-                headers: {
-                    authorization: `Bearer ${token}`,
+        try {
+            const response = await axios.post(
+                'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
+                bodyRequest,
+                {
+                    headers: {
+                        authorization: `Bearer ${token}`, // Correctly use the token
+                    },
                 },
-            },
-        );
-
-        this.logger.warn(`Response: ${response.data}`);
+            );
+            this.logger.warn(`Response: ${JSON.stringify(response.data)}`);
+        } catch (error) {
+            this.logger.error(`Error during STK Push: ${error.message}`);
+            throw new HttpException('Failed to initiate STK Push', 500);
+        }
     }
 }

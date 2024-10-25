@@ -1,88 +1,59 @@
+### SERVER IMPLEMENTATION OF DARAJA API
 
+-   This is an implementation of the Daraja API by Safaricom. This is a follow up of the previous implementation of the same API using Express.js. This time round, I have used Nestjs to implement the API.
+    implement the API, adding other features offfered by Safaricom's Daraja API.
+-   Typescript support is enabled in this project.
 
-# M-Pesa Stk Push Backend
+#### previous implementation of the same API using Express.js can be found in the branch [expressjs](https://github.com/Domains18/NodeJsDaraja/tree/expressjs-branch)
 
-This backend code is designed to facilitate M-Pesa Stk Push transactions. It includes functionality for generating OAuth tokens, initiating Stk Push transactions, and handling callbacks for transaction status updates.
+### Installation
 
-## Prerequisites
-
-Before running the backend code, make sure you have the following set up:
-
-- Node.js installed
-- npm (Node Package Manager) installed
-- MongoDB or another database (For storing transaction data)
-
-## Installation
-
-1. Clone the repository:
+-   Clone the repository
 
 ```bash
-git clone https://github.com/Domains18/NodejsDaraja
-
+git clone https://github.com/Domains18/NodeJsDaraja.git
 ```
 
-2. Navigate to the project directory:
+-   Install dependencies
 
-```bash 
-cd /path/to/your/backend
-
+```bash
+pnpm install
 ```
 
-3. Install dependencies:
+-   Create a .env file in the root directory and add the following environment variables
 
-``` bash
-npm install
-
+```bash
+PORT=3000
+CONSUMER_KEY=YOUR_CONSUMER_KEY
+CONSUMER_SECRET=YOUR_CONSUMER_SECRET
+SHORTCODE=YOUR_SHORTCODE
 ```
 
-4. Set up environment variables:
+-   Start the server
 
-Create a `.env` file in the project root and configure the following variables:
-the following envirronment can be obtained from safaricom daraja portal 
-```env
-consumer_key=your_consumer_key
-consumer_secret=your_consumer_secret
-shortcode=your_mpesa_shortcode
-passkey=your_mpesa_passkey
-MONGODB_URI=your_mongodb_uri
-
+```bash
+pnpm start
 ```
 
-5. Start the server:
+-   The server will be running on http://localhost:3000
 
-```bash 
-npm start
+### CONTRIBUTING
 
-```
+-   Fork the repository
+-   Create a new branch (feature/bug)
+-   Make changes
+-   Commit changes
+-   Push changes to your branch
+-   Create a pull request
 
-The backend server should now be running.
+### LICENSE
 
-## Endpoints
+-   MIT License
+-   [LICENSE](LICENSE)
 
-### 1. Generate OAuth Token and PushStk
+### AUTHOR
 
-- **Endpoint:** `/api/stkpush`
-- **Method:** `POST`
-- **Description:** Generates an OAuth token required for M-Pesa API requests and innitiates a pushstk request.
+-   Gibson Kemboi
+-   [Email](mailto:dev.domains18@gmail.com)
 
-### 3. Callback for Transaction Status
-
-- **Endpoint:** `/api/callback`
-- **Method:** `POST`
-- **Description:** Handles callbacks from M-Pesa to update transaction status.
-
-
-## Additional Information
-
-- This backend code uses Axios for making HTTP requests.
-- Transaction data is stored in a MongoDB database.
-- Callbacks from M-Pesa are handled to update the transaction status.
-
-Feel free to customize and extend the backend based on your specific requirements.
-
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
----
-
+### product of [NerdsCatapult](https://nerds.africa)

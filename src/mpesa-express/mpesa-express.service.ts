@@ -16,6 +16,7 @@ export class MpesaExpressService {
 
     private readonly redis: Redis | null;
     private logger = new Logger('MpesaExpressService');
+    
 
     private async generateTimestamp(): Promise<string> {
         const date = new Date();
@@ -27,8 +28,33 @@ export class MpesaExpressService {
              ('0' + date.getSeconds()).slice(-2);
     }
 
+
+    async validateDto(createMpesaExpressDto: CreateMpesaExpressDto): Promise<void> {
+        const obeysPhoneNum = createMpesaExpressDto.phoneNum.match(/^2547\d{8}$/);
+        if (!obeysPhoneNum) {
+            this.logger.warn("The phone number does not obey the format");
+            throw new HttpException('Phone number must be in the format 2547XXXXXXXX"', 400);
+        }
+
+        const obeysAccountRef = createMpesaExpressDto.accountRef.match(/^[a-zA-Z0-9]{1,12}$/);
+        if (!obeysAccountRef) {
+            this.logger.warn("The account reference does not obey the format");
+            throw new HttpException('Account reference must be alphanumeric and not more than 12 characters', 400);
+        }
+
+        const obeysAmount = createMpesaExpressDto.amount > 0;
+        if (!obeysAmount) {
+            this.logger.warn("The amount does not obey the format");
+            throw new HttpException('Amount must be greater than 0', 400);
+        }
+
+        return;
+    }
     
     async stkPush(createMpesaExpressDto: CreateMpesaExpressDto): Promise<void> {
+
+        await this.validateDto(createMpesaExpressDto);
+        
         const shortcode = "174379";
         const passkey = this.configService.get('PASS_KEY');
 

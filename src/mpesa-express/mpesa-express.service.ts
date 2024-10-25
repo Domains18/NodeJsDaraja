@@ -1,22 +1,32 @@
 import { Injectable, HttpException, Logger } from '@nestjs/common';
 import { CreateMpesaExpressDto } from './dto/create-mpesa-express.dto';
 import { AuthService } from 'src/services/auth.service';
-import axios from 'axios';
+import { ConfigService } from '@nestjs/config';
+
 
 @Injectable()
 export class MpesaExpressService {
-    constructor(private authService: AuthService) {}
+    constructor(private authService: AuthService,
+        private configService: ConfigService
+    ) {}
 
     private logger = new Logger('MpesaExpressService');
 
     private async generateTimestamp() {
         const date = new Date();
-        return `${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}`;
+         return date.getFullYear() +
+             ('0' + (date.getMonth() + 1)).slice(-2) +
+             ('0' + date.getDate()).slice(-2) +
+             ('0' + date.getHours()).slice(-2) +
+             ('0' + date.getMinutes()).slice(-2) +
+             ('0' + date.getSeconds()).slice(-2);
     }
 
-    async stkPush(createMpesaExpressDto: CreateMpesaExpressDto) {
-        const shortcode = process.env.MPESA_SHORTCODE;
-        const passkey = process.env.MPESA_PASSKEY;
+    
+    async stkPush(createMpesaExpressDto: CreateMpesaExpressDto): Promise<void> {
+        // this.logger.debug(await this.generateTimestamp());
+        const shortcode = "174379";
+        const passkey = this.configService.get('PASS_KEY');
 
         const timestamp = await this.generateTimestamp();
         const password = Buffer.from(`${shortcode}${passkey}${timestamp}`).toString('base64');
@@ -27,6 +37,8 @@ export class MpesaExpressService {
             throw new HttpException('Failed to generate token, please check your environment variables', 401);
         }
 
+        this.logger.debug(password)
+
         const bodyRequest = {
             BusinessShortCode: '174379',
             Password: password,
@@ -36,24 +48,24 @@ export class MpesaExpressService {
             PartyA: createMpesaExpressDto.phoneNum,
             PartyB: '174379',
             PhoneNumber: createMpesaExpressDto.phoneNum,
-            CallBackURL: 'https://mydomain.com/pat',
+            CallBackURL: 'https://mydomain.com/ytr',
             AccountReference: createMpesaExpressDto.accountRef,
-            TransactionDesc: 'Payment for goods and services',
+            TransactionDesc: 'szken',
         };
 
         try {
-            const response = await axios.post(
-                'https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest',
-                bodyRequest,
-                {
-                    headers: {
-                        authorization: `Bearer ${token}`, // Correctly use the token
-                    },
+            const response = await fetch('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
+                method: 'POST',
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json',
                 },
-            );
-            this.logger.warn(`Response: ${JSON.stringify(response.data)}`);
+                body: JSON.stringify(bodyRequest),
+            });
+            const data = await response.json();
+            this.logger.debug(`STK Push Response: ${JSON.stringify(data)}`);
         } catch (error) {
-            this.logger.error(`Error during STK Push: ${error.message}`);
+            this.logger.error(`Error during STK Push: ${error}`);
             throw new HttpException('Failed to initiate STK Push', 500);
         }
     }

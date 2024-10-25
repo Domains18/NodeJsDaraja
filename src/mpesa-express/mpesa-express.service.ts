@@ -2,17 +2,22 @@ import { Injectable, HttpException, Logger } from '@nestjs/common';
 import { CreateMpesaExpressDto } from './dto/create-mpesa-express.dto';
 import { AuthService } from 'src/services/auth.service';
 import { ConfigService } from '@nestjs/config';
-
+import axios from 'axios';
+import { RedisService, DEFAULT_REDIS } from '@liaoliaots/nestjs-redis';
+import { Redis } from 'ioredis';
 
 @Injectable()
 export class MpesaExpressService {
-    constructor(private authService: AuthService,
-        private configService: ConfigService
+    constructor(
+        private authService: AuthService,
+        private configService: ConfigService,
+        private readonly redisService: RedisService
     ) {}
 
+    private readonly redis: Redis | null;
     private logger = new Logger('MpesaExpressService');
 
-    private async generateTimestamp() {
+    private async generateTimestamp(): Promise<string> {
         const date = new Date();
          return date.getFullYear() +
              ('0' + (date.getMonth() + 1)).slice(-2) +
@@ -24,7 +29,6 @@ export class MpesaExpressService {
 
     
     async stkPush(createMpesaExpressDto: CreateMpesaExpressDto): Promise<void> {
-        // this.logger.debug(await this.generateTimestamp());
         const shortcode = "174379";
         const passkey = this.configService.get('PASS_KEY');
 
@@ -54,16 +58,19 @@ export class MpesaExpressService {
         };
 
         try {
-            const response = await fetch('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', {
-                method: 'POST',
+            const response = await axios.post('https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest', bodyRequest, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(bodyRequest),
             });
-            const data = await response.json();
-            this.logger.debug(`STK Push Response: ${JSON.stringify(data)}`);
+            const checkoutRequestID = response.data.CheckoutRequestID;
+            const redisClient = this.redisService.getOrThrow();
+
+            await redisClient.setex(checkoutRequestID, 3600, JSON.stringify({ ...response.data, status: 'PENDING' }));
+
+            return response.data;
+
         } catch (error) {
             this.logger.error(`Error during STK Push: ${error}`);
             throw new HttpException('Failed to initiate STK Push', 500);

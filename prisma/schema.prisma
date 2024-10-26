@@ -24,4 +24,13 @@ model Transaction {
   Balance            Int?
   TransactionDate    DateTime
   PhoneNumber        String
+
+  status             Status   @default(PENDING)
+}
+
+
+enum Status {
+  PENDING
+  COMPLETED
+  FAILED
 }

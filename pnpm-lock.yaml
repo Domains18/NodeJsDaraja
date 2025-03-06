@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@liaoliaots/nestjs-redis':
         specifier: ^10.0.0
-        version: 10.0.0(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.4.15)(ioredis@5.4.1)
+        version: 10.0.0(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.4.15)(ioredis@5.6.0)
       '@nestjs/common':
         specifier: ^10.4.15
         version: 10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)
@@ -39,8 +39,8 @@ importers:
         specifier: ^0.14.1
         version: 0.14.1
       ioredis:
-        specifier: ^5.4.1
-        version: 5.4.1
+        specifier: ^5.6.0
+        version: 5.6.0
       nestjs-redis:
         specifier: ^1.3.3
         version: 1.3.3(@nestjs/platform-express@10.4.15)(class-transformer@0.5.1)(class-validator@0.14.1)
@@ -1314,6 +1314,15 @@ packages:
       supports-color:
         optional: true
 
+  debug@4.4.0:
+    resolution: {integrity: sha512-6WTZ/IxCY/T6BALoZHaE4ctp9xm+Z5kY/pzYaCHRFeyVhojxlrm+46y68HA6hr0TcwEssoxNiDEUJQjfPZ/RYA==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   dedent@1.5.3:
     resolution: {integrity: sha512-NHQtfOOW68WD8lgypbLA5oT+Bt0xXJhiYvoR6SmmNXZfpzOGXwdKWmcwG8N7PwVVWV3eF/68nmD9BaJSsTBhyQ==}
     peerDependencies:
@@ -1807,12 +1816,12 @@ packages:
     resolution: {integrity: sha512-vI2w4zl/mDluHt9YEQ/543VTCwPKWiHzKtm9dM2V0NdFcqEexDAjUHzO1oA60HRNaVifGXXM1tRRNluLVHa0Kg==}
     engines: {node: '>=18'}
 
-  ioredis@4.28.5:
-    resolution: {integrity: sha512-3GYo0GJtLqgNXj4YhrisLaNNvWSNwSS2wS4OELGfGxH8I69+XfNdnmV1AyN+ZqMh0i7eX+SWjrwFKDBDgfBC1A==}
+  ioredis@4.29.1:
+    resolution: {integrity: sha512-iq4u3AC9h9/P/gBXH1cUR7Ln0exKexqMaYDwUaoZJzkvvgJs9W5+CLQFS0APyG8uyvJJjn6q6Vx7LwmZQu3h5A==}
     engines: {node: '>=6'}
 
-  ioredis@5.4.1:
-    resolution: {integrity: sha512-2YZsvl7jopIa1gaePkeMtd9rAcSjOOjPtpcLlOeusyO+XH2SK5ZcT+UCrElPP+WVIInh2TzeI4XW9ENaSLVVHA==}
+  ioredis@5.6.0:
+    resolution: {integrity: sha512-tBZlIIWbndeWBWCXWZiqtOF/yxf6yZX3tAlTJ7nfo5jhd6dctNxF7QnYlZLZ1a0o0pDoen7CgZqO+zjNaFbJAg==}
     engines: {node: '>=12.22.0'}
 
   ipaddr.js@1.9.1:
@@ -2494,9 +2503,6 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
-  redis-commands@1.7.0:
-    resolution: {integrity: sha512-nJWqw3bTFy21hX/CPKHth6sfhZbdiHP6bTawSgQBlKOVRG7EZkfHbbHwQJnrE4vsQf0CMNE+3gJ4Fmm16vdVlQ==}
-
   redis-errors@1.2.0:
     resolution: {integrity: sha512-1qny3OExCf0UvUV/5wpYKf2YwPcOqXzkwKKSmKHiE6ZMQs5heeE/c8eXK+PNllPvmjgAbfnsbpkGZWy8cBpn9w==}
     engines: {node: '>=4'}
@@ -3111,7 +3117,7 @@ snapshots:
       '@babel/traverse': 7.25.9
       '@babel/types': 7.25.9
       convert-source-map: 2.0.0
-      debug: 4.3.7
+      debug: 4.4.0
       gensync: 1.0.0-beta.2
       json5: 2.2.3
       semver: 6.3.1
@@ -3279,7 +3285,7 @@ snapshots:
       '@babel/parser': 7.25.9
       '@babel/template': 7.25.9
       '@babel/types': 7.25.9
-      debug: 4.3.7
+      debug: 4.4.0
       globals: 11.12.0
     transitivePeerDependencies:
       - supports-color
@@ -3543,11 +3549,11 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@liaoliaots/nestjs-redis@10.0.0(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.4.15)(ioredis@5.4.1)':
+  '@liaoliaots/nestjs-redis@10.0.0(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/core@10.4.15)(ioredis@5.6.0)':
     dependencies:
       '@nestjs/common': 10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1)
       '@nestjs/core': 10.4.15(@nestjs/common@10.4.15(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@7.8.1))(@nestjs/platform-express@10.4.15)(reflect-metadata@0.2.2)(rxjs@7.8.1)
-      ioredis: 5.4.1
+      ioredis: 5.6.0
       tslib: 2.7.0
 
   '@ljharb/through@2.3.13':
@@ -3858,7 +3864,7 @@ snapshots:
 
   '@types/ioredis@5.0.0':
     dependencies:
-      ioredis: 5.4.1
+      ioredis: 5.6.0
     transitivePeerDependencies:
       - supports-color
 
@@ -3970,7 +3976,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/typescript-estree': 8.19.0(typescript@5.7.2)
       '@typescript-eslint/utils': 8.19.0(eslint@8.57.1)(typescript@5.7.2)
-      debug: 4.3.7
+      debug: 4.4.0
       eslint: 8.57.1
       ts-api-utils: 1.3.0(typescript@5.7.2)
       typescript: 5.7.2
@@ -4000,7 +4006,7 @@ snapshots:
     dependencies:
       '@typescript-eslint/types': 8.19.0
       '@typescript-eslint/visitor-keys': 8.19.0
-      debug: 4.3.7
+      debug: 4.4.0
       fast-glob: 3.3.2
       is-glob: 4.0.3
       minimatch: 9.0.5
@@ -4526,6 +4532,10 @@ snapshots:
       ms: 2.0.0
 
   debug@4.3.7:
+    dependencies:
+      ms: 2.1.3
+
+  debug@4.4.0:
     dependencies:
       ms: 2.1.3
 
@@ -5066,27 +5076,27 @@ snapshots:
       strip-ansi: 6.0.1
       wrap-ansi: 6.2.0
 
-  ioredis@4.28.5:
+  ioredis@4.29.1:
     dependencies:
+      '@ioredis/commands': 1.2.0
       cluster-key-slot: 1.1.2
-      debug: 4.3.7
+      debug: 4.4.0
       denque: 1.5.1
       lodash.defaults: 4.2.0
       lodash.flatten: 4.4.0
       lodash.isarguments: 3.1.0
       p-map: 2.1.0
-      redis-commands: 1.7.0
       redis-errors: 1.2.0
       redis-parser: 3.0.0
       standard-as-callback: 2.1.0
     transitivePeerDependencies:
       - supports-color
 
-  ioredis@5.4.1:
+  ioredis@5.6.0:
     dependencies:
       '@ioredis/commands': 1.2.0
       cluster-key-slot: 1.1.2
-      debug: 4.3.7
+      debug: 4.4.0
       denque: 2.1.0
       lodash.defaults: 4.2.0
       lodash.isarguments: 3.1.0
@@ -5162,7 +5172,7 @@ snapshots:
 
   istanbul-lib-source-maps@4.0.1:
     dependencies:
-      debug: 4.3.7
+      debug: 4.4.0
       istanbul-lib-coverage: 3.2.2
       source-map: 0.6.1
     transitivePeerDependencies:
@@ -5683,7 +5693,7 @@ snapshots:
       '@nestjs/core': 7.6.18(@nestjs/common@7.6.18(class-transformer@0.5.1)(class-validator@0.14.1)(reflect-metadata@0.2.2)(rxjs@6.6.7))(@nestjs/platform-express@10.4.15)(reflect-metadata@0.2.2)(rxjs@6.6.7)
       '@types/ioredis': 5.0.0
       '@types/uuid': 10.0.0
-      ioredis: 4.28.5
+      ioredis: 4.29.1
       reflect-metadata: 0.2.2
       rxjs: 6.6.7
       uuid: 8.3.2
@@ -5908,8 +5918,6 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
-  redis-commands@1.7.0: {}
-
   redis-errors@1.2.0: {}
 
   redis-parser@3.0.0:
@@ -6126,7 +6134,7 @@ snapshots:
     dependencies:
       component-emitter: 1.3.1
       cookiejar: 2.1.4
-      debug: 4.3.7
+      debug: 4.4.0
       fast-safe-stringify: 2.1.1
       form-data: 4.0.1
       formidable: 3.5.2

@@ -42,6 +42,11 @@ lerna-debug.log*
 .env.production.local
 .env.local
 
+# M-Pesa Certificates
+certificates/*.cer
+certificates/*.crt
+certificates/*.pem
+
 # temp directory
 .temp
 .tmp

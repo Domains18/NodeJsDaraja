@@ -16,7 +16,7 @@ datasource db {
 model Transaction {
   id                 Int      @id @default(autoincrement())
   MerchantRequestID  String
-  CheckoutRequestID  String
+  CheckoutRequestID  String   @unique
   ResultCode         String
   ResultDesc         String
   Amount             Int
@@ -24,13 +24,221 @@ model Transaction {
   Balance            Int?
   TransactionDate    DateTime
   PhoneNumber        String
-
   status             Status   @default(PENDING)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 }
 
+// C2B Transactions
+model C2BTransaction {
+  id                 Int      @id @default(autoincrement())
+  TransactionType    String   // PayBill or BuyGoods
+  TransID            String   @unique
+  TransTime          String
+  TransAmount        Float
+  BusinessShortCode  String
+  BillRefNumber      String?
+  InvoiceNumber      String?
+  OrgAccountBalance  Float?
+  ThirdPartyTransID  String?
+  MSISDN             String
+  FirstName          String?
+  MiddleName         String?
+  LastName           String?
+  status             Status   @default(COMPLETED)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+}
+
+// B2C Transactions
+model B2CTransaction {
+  id                           Int      @id @default(autoincrement())
+  ConversationID               String   @unique
+  OriginatorConversationID     String   @unique
+  InitiatorName                String
+  CommandID                    String   // SalaryPayment, BusinessPayment, PromotionPayment
+  Amount                       Float
+  PartyA                       String   // Shortcode
+  PartyB                       String   // Phone number
+  Remarks                      String?
+  QueueTimeoutURL              String
+  ResultURL                    String
+  Occassion                    String?
+  ResultType                   Int?
+  ResultCode                   Int?
+  ResultDesc                   String?
+  TransactionID                String?
+  TransactionAmount            Float?
+  TransactionReceipt           String?
+  B2CWorkingAccountFunds       Float?
+  B2CUtilityAccountFunds       Float?
+  TransactionCompletedDateTime String?
+  ReceiverPartyPublicName      String?
+  B2CChargesPaidAccountFunds   Float?
+  RecipientIsRegistered        Boolean?
+  status                       Status   @default(PENDING)
+  createdAt                    DateTime @default(now())
+  updatedAt                    DateTime @updatedAt
+}
+
+// B2B Transactions
+model B2BTransaction {
+  id                       Int      @id @default(autoincrement())
+  ConversationID           String   @unique
+  OriginatorConversationID String   @unique
+  InitiatorName            String
+  CommandID                String   // BusinessPayBill, MerchantToMerchantTransfer, etc
+  Amount                   Float
+  PartyA                   String   // Sender shortcode
+  PartyB                   String   // Receiver shortcode
+  SenderIdentifierType     Int      // 4 for shortcode
+  ReceiverIdentifierType   Int
+  AccountReference         String
+  Remarks                  String?
+  QueueTimeoutURL          String
+  ResultURL                String
+  ResultType               Int?
+  ResultCode               Int?
+  ResultDesc               String?
+  TransactionID            String?
+  DebitAccountBalance      Float?
+  CreditAccountBalance     Float?
+  DebitPartyCharges        Float?
+  RecipientIsRegistered    Boolean?
+  status                   Status   @default(PENDING)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+// Account Balance Queries
+model AccountBalanceQuery {
+  id                       Int      @id @default(autoincrement())
+  ConversationID           String   @unique
+  OriginatorConversationID String   @unique
+  InitiatorName            String
+  PartyA                   String   // Shortcode
+  IdentifierType           Int      // 4 for shortcode
+  Remarks                  String?
+  QueueTimeoutURL          String
+  ResultURL                String
+  ResultType               Int?
+  ResultCode               Int?
+  ResultDesc               String?
+  AccountBalance           String?  // Multiple balances in format
+  BOCompletedTime          String?
+  status                   Status   @default(PENDING)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+// Transaction Status Queries
+model TransactionStatusQuery {
+  id                       Int      @id @default(autoincrement())
+  ConversationID           String   @unique
+  OriginatorConversationID String   @unique
+  InitiatorName            String
+  TransactionID            String   // Original transaction ID
+  PartyA                   String   // Shortcode
+  IdentifierType           Int
+  Remarks                  String?
+  QueueTimeoutURL          String
+  ResultURL                String
+  Occassion                String?
+  ResultType               Int?
+  ResultCode               Int?
+  ResultDesc               String?
+  OriginalTransactionID    String?
+  ReferenceData            Json?
+  status                   Status   @default(PENDING)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+// Reversal Transactions
+model ReversalTransaction {
+  id                       Int      @id @default(autoincrement())
+  ConversationID           String   @unique
+  OriginatorConversationID String   @unique
+  InitiatorName            String
+  TransactionID            String   // Original transaction to reverse
+  Amount                   Float
+  ReceiverParty            String   // Shortcode
+  ReceiverIdentifierType   Int
+  Remarks                  String?
+  QueueTimeoutURL          String
+  ResultURL                String
+  Occassion                String?
+  ResultType               Int?
+  ResultCode               Int?
+  ResultDesc               String?
+  TransactionAmount        Float?
+  DebitAccountBalance      Float?
+  status                   Status   @default(PENDING)
+  createdAt                DateTime @default(now())
+  updatedAt                DateTime @updatedAt
+}
+
+// Dynamic QR Codes
+model DynamicQR {
+  id                  Int      @id @default(autoincrement())
+  MerchantName        String
+  RefNo               String   @unique
+  Amount              Float
+  TrxCode             String   // Transaction type code
+  CPI                 String?  // Credit Party Identifier
+  Size                String   @default("300") // QR code size
+  QRCode              String   @db.Text // Base64 QR code image
+  ResponseCode        String?
+  ResponseDescription String?
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+}
+
+// Bill Manager - Onboarded Accounts
+model BillAccount {
+  id                  Int           @id @default(autoincrement())
+  ShortCode           String        @unique
+  Email               String
+  OfficialContact     String
+  SendReminders       Boolean       @default(false)
+  Logo                String?       @db.Text // Base64 logo
+  CallBackUrl         String
+  OnboardingStatus    String?
+  ResponseCode        String?
+  ResponseDescription String?
+  payments            BillPayment[]
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @updatedAt
+}
+
+// Bill Manager - Payments
+model BillPayment {
+  id                 Int         @id @default(autoincrement())
+  account            BillAccount @relation(fields: [accountId], references: [id])
+  accountId          Int
+  TransactionType    String
+  TransID            String      @unique
+  TransTime          String
+  TransAmount        Float
+  BusinessShortCode  String
+  BillRefNumber      String
+  InvoiceNumber      String?
+  OrgAccountBalance  Float?
+  ThirdPartyTransID  String?
+  MSISDN             String
+  FirstName          String?
+  MiddleName         String?
+  LastName           String?
+  status             Status      @default(COMPLETED)
+  createdAt          DateTime    @default(now())
+  updatedAt          DateTime    @updatedAt
+
+  @@index([accountId])
+}
 
 enum Status {
   PENDING
   COMPLETED
   FAILED
+  TIMEOUT
 }

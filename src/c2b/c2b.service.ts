@@ -162,8 +162,7 @@ export class C2BService {
     private validateDto(dto: SimulateC2BDto): void {
         const validations = [
             {
-                condition: !dto.msisdn.match(/^254\d{9}$/),
-                message: 'Phone number must be in the format 254XXXXXXXXX',
+                condition: !MpesaValidators.isValidPhoneNumber(dto.msisdn),
             },
             {
                 condition: dto.amount <= 0,

@@ -172,7 +172,7 @@ export class B2CService {
                 message: 'Amount must be greater than 0',
             },
             {
-                condition: !dto.phoneNumber.match(/^2547\d{8}$/),
+                condition: !MpesaValidators.isValidPhoneNumber(dto.phoneNumber),
                 message: 'Invalid phone number format. Use 2547XXXXXXXX',
             },
         ];

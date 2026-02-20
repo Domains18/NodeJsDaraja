@@ -23,13 +23,10 @@ This implementation provides a complete suite of M-Pesa services:
 - 🗄️ **Database** - MySQL with Prisma ORM
 - ✅ **Validation** - Request validation with class-validator
 - 📝 **Logging** - Comprehensive error and operation logging
-- 🔄 **Callbacks** - Async callback handling for all services
-- 🏗️ **Modular** - Clean, maintainable architecture
+PORT=3000
 
-## 📋 Prerequisites
-
-- Node.js (v22.10.2 or higher)
-- MySQL database
+# For a complete list of required environment variables,
+# please refer to the .env.example file.
 - Redis server
 - Safaricom Daraja API credentials ([Get them here](https://developer.safaricom.co.ke))
 

@@ -49,7 +49,7 @@ export class ReversalService {
                 TransactionID: dto.transactionID,
                 Amount: dto.amount,
                 ReceiverParty: dto.receiverParty,
-                RecieverIdentifierType: dto.receiverIdentifierType || IDENTIFIER_TYPES.SHORTCODE,
+                ReceiverIdentifierType: dto.receiverIdentifierType || IDENTIFIER_TYPES.SHORTCODE,
                 QueueTimeOutURL: this.configService.get<string>('REVERSAL_TIMEOUT_URL'),
                 ResultURL: this.configService.get<string>('REVERSAL_RESULT_URL'),
                 Remarks: dto.remarks || 'Transaction Reversal',

@@ -49,7 +49,7 @@ export class B2BService {
                 SecurityCredential: securityCredential,
                 CommandID: dto.commandId,
                 SenderIdentifierType: dto.senderIdentifierType || IDENTIFIER_TYPES.SHORTCODE,
-                RecieverIdentifierType: dto.receiverIdentifierType || IDENTIFIER_TYPES.SHORTCODE,
+                ReceiverIdentifierType: dto.receiverIdentifierType || IDENTIFIER_TYPES.SHORTCODE,
                 Amount: dto.amount,
                 PartyA: this.shortcode,
                 PartyB: dto.partyB,

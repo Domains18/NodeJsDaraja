@@ -24,9 +24,11 @@ pnpm install
 
 ```bash
 PORT=3000
+DATABASE_URL="mysql://user:password@localhost:3306/mpesa_db"
 CONSUMER_KEY=YOUR_CONSUMER_KEY
 CONSUMER_SECRET=YOUR_CONSUMER_SECRET
-SHORTCODE=YOUR_SHORTCODE
+PASS_KEY=YOUR_PASSKEY
+REDIS_URL=redis://localhost:6379
 ```
 
 -   Start the server
